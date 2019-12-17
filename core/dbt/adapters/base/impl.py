@@ -123,7 +123,10 @@ class SchemaSearchMap(dict):
         key = relation.information_schema_only()
         if key not in self:
             self[key] = set()
-        self[key].add(relation.schema.lower())
+        lowered: Optional[str] = None
+        if relation.schema is not None:
+            lowered = relation.schema.lower()
+        self[key].add(lowered)
 
     def search(self):
         for information_schema_name, schemas in self.items():

@@ -305,7 +305,7 @@ class RelationsCache:
         if ref_key not in self.relations:
             # Insert a dummy "external" relation.
             referenced = referenced.replace(
-                type=referenced.RelationType.External
+                type=referenced.External
             )
             self.add(referenced)
 
@@ -313,7 +313,7 @@ class RelationsCache:
         if dep_key not in self.relations:
             # Insert a dummy "external" relation.
             dependent = dependent.replace(
-                type=referenced.RelationType.External
+                type=referenced.External
             )
             self.add(dependent)
         logger.debug(

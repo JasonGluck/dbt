@@ -232,13 +232,13 @@ class StateHandler:
     def task_teardown(self):
         self.handler.task.cleanup(self.handler.result)
 
-    def __exit__(self, exc_type, exc_value, exc_tb) -> bool:
+    def __exit__(self, exc_type, exc_value, exc_tb) -> None:
         try:
             if exc_type is not None:
                 self.handle_error(exc_type, exc_value, exc_tb)
             else:
                 self.handle_completed()
-            return False
+            return
         finally:
             # we really really promise to run your teardown
             self.task_teardown()
@@ -361,7 +361,7 @@ class RequestTaskHandler(threading.Thread, TaskHandlerProtocol):
             return msg.result
         else:
             raise dbt.exceptions.InternalException(
-                'Invalid message type {} (result={})'.format(msg)
+                'Invalid message type {} (msg={})'.format(type(msg), msg)
             )
 
     def get_result(self) -> RemoteResult:
